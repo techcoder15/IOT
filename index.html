@@ -3,18 +3,87 @@
 <head>
   <meta charset="UTF-8">
   <title>ESP32 LED Control</title>
-  <link rel="stylesheet" href="style.css">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <style>
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      height: 100vh;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      background: linear-gradient(135deg, #0f0c29, #302b63, #24243e);
+      font-family: "Segoe UI", sans-serif;
+    }
+
+    .card {
+      width: 330px;
+      padding: 30px;
+      border-radius: 22px;
+      background: rgba(255, 255, 255, 0.1);
+      backdrop-filter: blur(18px);
+      text-align: center;
+      color: white;
+      box-shadow: 0 0 40px rgba(0, 255, 255, 0.3);
+    }
+
+    h1 {
+      margin-bottom: 10px;
+      letter-spacing: 2px;
+    }
+
+    #status {
+      font-size: 18px;
+      margin: 20px 0;
+    }
+
+    button {
+      width: 170px;
+      height: 55px;
+      font-size: 18px;
+      font-weight: bold;
+      border-radius: 30px;
+      border: none;
+      cursor: pointer;
+      color: white;
+      transition: 0.3s ease;
+    }
+
+    /* OFF STATE */
+    .off {
+      background: linear-gradient(135deg, #ff416c, #ff4b2b);
+      box-shadow: 0 0 25px rgba(255, 75, 43, 0.9);
+    }
+
+    /* ON STATE */
+    .on {
+      background: linear-gradient(135deg, #00ff99, #00ccff);
+      box-shadow: 0 0 30px rgba(0, 255, 200, 1);
+    }
+
+    .on:hover {
+      box-shadow: 0 0 50px rgba(0, 255, 200, 1);
+    }
+
+    .off:hover {
+      box-shadow: 0 0 50px rgba(255, 75, 43, 1);
+    }
+  </style>
 </head>
 
 <body>
+
   <div class="card">
     <h1>ESP32 LED</h1>
     <p id="status">Status: --</p>
-    <button id="toggleBtn">Toggle</button>
+    <button id="toggleBtn" class="off">LOADING</button>
   </div>
 
-  <!-- IMPORTANT -->
+  <!-- Firebase logic -->
   <script type="module" src="script.js"></script>
 </body>
 </html>
-
