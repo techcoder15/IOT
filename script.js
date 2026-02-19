@@ -1,37 +1,69 @@
-// Firebase imports (MODULAR)
-import { initializeApp } from "https://www.gstatic.com/firebasejs/9.23.0/firebase-app.js";
-import { getDatabase, ref, set, onValue } from "https://www.gstatic.com/firebasejs/9.23.0/firebase-database.js";
+* {
+  box-sizing: border-box;
+}
 
-// Your Firebase config (SAFE for frontend)
-const firebaseConfig = {
-  apiKey: "AIzaSyBgrz2ux4J0mO9haVVwc6PaCrJ4ftkZrMw",
-  authDomain: "iot-workshop-11604.firebaseapp.com",
-  databaseURL: "https://iot-workshop-11604-default-rtdb.asia-southeast1.firebasedatabase.app",
-  projectId: "iot-workshop-11604",
-  storageBucket: "iot-workshop-11604.firebasestorage.app",
-  messagingSenderId: "1056573121883",
-  appId: "1:1056573121883:web:630cdab34687ce8fee667e"
-};
+body {
+  height: 100vh;
+  margin: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background: linear-gradient(135deg, #0f0c29, #302b63, #24243e);
+  font-family: 'Segoe UI', sans-serif;
+}
 
-// Initialize Firebase
-const app = initializeApp(firebaseConfig);
-const database = getDatabase(app);
+.card {
+  width: 320px;
+  padding: 30px;
+  border-radius: 20px;
+  background: rgba(255, 255, 255, 0.08);
+  backdrop-filter: blur(15px);
+  text-align: center;
+  color: white;
+  box-shadow: 0 0 40px rgba(0,255,255,0.25);
+  transition: 0.4s;
+}
 
-// Reference to LED state
-const ledRef = ref(database, "led/state");
+h1 {
+  margin-bottom: 10px;
+  letter-spacing: 2px;
+}
 
-// UI Elements
-const statusText = document.getElementById("status");
-const toggleBtn = document.getElementById("toggleBtn");
+#status {
+  margin: 20px 0;
+  font-size: 18px;
+}
 
-// 🔁 Live update from Firebase
-onValue(ledRef, (snapshot) => {
-  const state = snapshot.val();
-  statusText.innerText = "Status: " + state;
-});
+/* Button */
+button {
+  width: 160px;
+  height: 55px;
+  font-size: 18px;
+  font-weight: bold;
+  border-radius: 30px;
+  border: none;
+  cursor: pointer;
+  transition: 0.3s ease;
+  color: white;
+}
 
-// 🔘 Button click
-toggleBtn.addEventListener("click", () => {
-  const currentState = statusText.innerText.includes("ON") ? "ON" : "OFF";
-  set(ledRef, currentState === "ON" ? "OFF" : "ON");
-});
+/* OFF State */
+.off {
+  background: linear-gradient(135deg, #ff416c, #ff4b2b);
+  box-shadow: 0 0 25px rgba(255, 75, 43, 0.9);
+}
+
+/* ON State */
+.on {
+  background: linear-gradient(135deg, #00ff99, #00ccff);
+  box-shadow: 0 0 30px rgba(0, 255, 200, 1);
+}
+
+/* Glow animation */
+.on:hover {
+  box-shadow: 0 0 50px rgba(0, 255, 200, 1);
+}
+
+.off:hover {
+  box-shadow: 0 0 50px rgba(255, 75, 43, 1);
+}
