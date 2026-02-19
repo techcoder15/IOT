@@ -1,21 +1,22 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
+  <meta charset="UTF-8" />
   <title>ESP32 LED Control</title>
   <link rel="stylesheet" href="style.css">
 </head>
+
 <body>
+  <div class="card">
+    <h1>ESP32 LED</h1>
+    <p id="status">Status: OFF</p>
 
-<div class="glass">
-  <h1>ESP32 LED Controller</h1>
-  <button id="toggleBtn">TURN ON</button>
-</div>
+    <button id="toggleBtn" class="off">
+      OFF
+    </button>
+  </div>
 
-<!-- Firebase -->
-<script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>
-<script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-database-compat.js"></script>
-
-<script src="script.js"></script>
+  <!-- Firebase JS -->
+  <script type="module" src="script.js"></script>
 </body>
 </html>
