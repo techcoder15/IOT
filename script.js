@@ -1,69 +1,48 @@
-* {
-  box-sizing: border-box;
-}
+// Firebase imports (MODULAR SDK – REQUIRED for GitHub Pages)
+import { initializeApp } from "https://www.gstatic.com/firebasejs/9.23.0/firebase-app.js";
+import { getDatabase, ref, set, onValue } from "https://www.gstatic.com/firebasejs/9.23.0/firebase-database.js";
 
-body {
-  height: 100vh;
-  margin: 0;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  background: linear-gradient(135deg, #0f0c29, #302b63, #24243e);
-  font-family: 'Segoe UI', sans-serif;
-}
+// 🔥 Your Firebase configuration
+const firebaseConfig = {
+  apiKey: "AIzaSyBgrz2ux4J0mO9haVVwc6PaCrJ4ftkZrMw",
+  authDomain: "iot-workshop-11604.firebaseapp.com",
+  databaseURL: "https://iot-workshop-11604-default-rtdb.asia-southeast1.firebasedatabase.app",
+  projectId: "iot-workshop-11604",
+  storageBucket: "iot-workshop-11604.firebasestorage.app",
+  messagingSenderId: "1056573121883",
+  appId: "1:1056573121883:web:630cdab34687ce8fee667e"
+};
 
-.card {
-  width: 320px;
-  padding: 30px;
-  border-radius: 20px;
-  background: rgba(255, 255, 255, 0.08);
-  backdrop-filter: blur(15px);
-  text-align: center;
-  color: white;
-  box-shadow: 0 0 40px rgba(0,255,255,0.25);
-  transition: 0.4s;
-}
+// Initialize Firebase
+const app = initializeApp(firebaseConfig);
+const database = getDatabase(app);
 
-h1 {
-  margin-bottom: 10px;
-  letter-spacing: 2px;
-}
+// Database reference
+const ledRef = ref(database, "led/state");
 
-#status {
-  margin: 20px 0;
-  font-size: 18px;
-}
+// UI elements
+const statusText = document.getElementById("status");
+const toggleBtn = document.getElementById("toggleBtn");
 
-/* Button */
-button {
-  width: 160px;
-  height: 55px;
-  font-size: 18px;
-  font-weight: bold;
-  border-radius: 30px;
-  border: none;
-  cursor: pointer;
-  transition: 0.3s ease;
-  color: white;
-}
+// 🔁 Listen for LED state changes
+onValue(ledRef, (snapshot) => {
+  const state = snapshot.val();
 
-/* OFF State */
-.off {
-  background: linear-gradient(135deg, #ff416c, #ff4b2b);
-  box-shadow: 0 0 25px rgba(255, 75, 43, 0.9);
-}
+  statusText.innerText = "Status: " + state;
 
-/* ON State */
-.on {
-  background: linear-gradient(135deg, #00ff99, #00ccff);
-  box-shadow: 0 0 30px rgba(0, 255, 200, 1);
-}
+  if (state === "ON") {
+    toggleBtn.classList.add("on");
+    toggleBtn.classList.remove("off");
+    toggleBtn.innerText = "TURN OFF";
+  } else {
+    toggleBtn.classList.add("off");
+    toggleBtn.classList.remove("on");
+    toggleBtn.innerText = "TURN ON";
+  }
+});
 
-/* Glow animation */
-.on:hover {
-  box-shadow: 0 0 50px rgba(0, 255, 200, 1);
-}
-
-.off:hover {
-  box-shadow: 0 0 50px rgba(255, 75, 43, 1);
-}
+// 🔘 Toggle LED state
+toggleBtn.addEventListener("click", () => {
+  const newState = statusText.innerText.includes("ON") ? "OFF" : "ON";
+  set(ledRef, newState);
+});
